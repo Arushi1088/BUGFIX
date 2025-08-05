@@ -1,0 +1,120 @@
+{
+  "Visual Design & Branding": [
+    "Consistent brand identity",
+    "Appropriate color scheme",
+    "Legible typography",
+    "Proper contrast ratios",
+    "Consistent iconography",
+    "Sufficient white space",
+    "Optimized images",
+    "Visual treatment of interactive elements"
+  ],
+  "Navigation & Information Architecture": [
+    "Clear navigation structure",
+    "Logical information hierarchy",
+    "Visible breadcrumbs",
+    "Search functionality",
+    "Menu labeling",
+    "Consistent navigation placement",
+    "Clear site map structure",
+    "Intuitive categorization",
+    "Easy-to-find important pages",
+    "Proper linking between related content"
+  ],
+  "Usability & User Experience": [
+    "Intuitive user interface",
+    "Clear call-to-action buttons",
+    "Consistent interaction patterns",
+    "Error prevention and handling",
+    "User feedback mechanisms",
+    "Efficient task completion flows",
+    "Minimal cognitive load",
+    "Progressive disclosure",
+    "User control and freedom",
+    "Recognition rather than recall"
+  ],
+  "Accessibility": [
+    "Keyboard navigation support",
+    "Screen reader compatibility",
+    "Alt text for images",
+    "Proper heading structure",
+    "Color accessibility",
+    "Focus indicators",
+    "ARIA labels and roles",
+    "Text resizing support",
+    "High contrast mode support",
+    "Closed captioning for videos"
+  ],
+  "Performance & Technical": [
+    "Fast loading times",
+    "Optimized images and assets",
+    "Responsive design",
+    "Cross-browser compatibility",
+    "Mobile optimization",
+    "Offline functionality",
+    "Error page handling",
+    "Form validation",
+    "Search engine optimization",
+    "Analytics implementation"
+  ],
+  "Content & Communication": [
+    "Clear and concise copy",
+    "Appropriate tone of voice",
+    "Scannable content structure",
+    "Relevant and high-quality images",
+    "Consistent messaging",
+    "Up-to-date information",
+    "Multilingual support if needed",
+    "Content hierarchy",
+    "Call-to-action clarity",
+    "User-centered language"
+  ],
+  "Forms & Input": [
+    "Clear field labels",
+    "Appropriate input types",
+    "Real-time validation",
+    "Error message clarity",
+    "Required field indicators",
+    "Logical tab order",
+    "Auto-complete support",
+    "Progress indicators for multi-step forms",
+    "Data privacy notices",
+    "Submit button clarity"
+  ],
+  "Mobile Experience": [
+    "Touch-friendly interface",
+    "Thumb-friendly navigation",
+    "Readable text without zooming",
+    "Optimized for portrait and landscape",
+    "Fast mobile loading",
+    "Minimal data usage",
+    "Gesture support",
+    "Mobile-specific features",
+    "App-like interactions",
+    "Offline capabilities"
+  ],
+  "Security & Privacy": [
+    "HTTPS implementation",
+    "Data protection measures",
+    "Privacy policy accessibility",
+    "Cookie consent management",
+    "Secure form submissions",
+    "User data transparency",
+    "Account security features",
+    "Secure authentication",
+    "Data backup and recovery",
+    "Compliance with regulations"
+  ],
+  "Testing & Quality Assurance": [
+    "Cross-device testing",
+    "User acceptance testing",
+    "A/B testing implementation",
+    "Performance monitoring",
+    "Accessibility testing",
+    "Usability testing",
+    "Browser compatibility testing",
+    "Load testing",
+    "Security testing",
+    "Content review and proofreading"
+  ]
+}

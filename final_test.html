@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html><head><title>Phase 1 Test</title></head>
+<body>
+    <h1>Phase 1 Verification Page</h1>
+    <p>Testing the enhanced UX analysis system.</p>
+    <button id="test-btn" onclick="showResult()">Click to Test</button>
+    <div id="result" style="display:none; margin-top:20px; padding:10px; background:#e7f3ff;">
+        <h3>Success!</h3>
+        <p>The test button was clicked successfully.</p>
+    </div>
+    <script>
+        function showResult() {
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('test-btn').style.display = 'none';
+        }
+    </script>
+</body></html>

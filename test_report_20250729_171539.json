@@ -1,0 +1,179 @@
+{
+  "summary": {
+    "timestamp": "2025-07-29T17:15:39.043383",
+    "total_scenarios": 7,
+    "passed": 6,
+    "failed": 1,
+    "errors": 0,
+    "success_rate": 85.71,
+    "total_duration_ms": 2208533,
+    "avg_scenario_duration_ms": 315504.71
+  },
+  "applications": {
+    "word": {
+      "total_scenarios": 2,
+      "passed": 1,
+      "failed": 1,
+      "errors": 0,
+      "success_rate": 50.0,
+      "total_duration_ms": 875017,
+      "scenarios": [
+        {
+          "scenario": "Create a new document",
+          "status": "fail",
+          "duration_ms": 635016,
+          "steps_executed": 15,
+          "expectations_met": 6,
+          "expectations_total": 8,
+          "errors": [
+            "Expected 8 checks, passed 6"
+          ],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 16,
+            "action_count": 15,
+            "expectations": {
+              "page_load_ms": 1000,
+              "action_response_ms": 200
+            }
+          }
+        },
+        {
+          "scenario": "Format text with bold and italic",
+          "status": "pass",
+          "duration_ms": 240001,
+          "steps_executed": 5,
+          "expectations_met": 3,
+          "expectations_total": 3,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 23,
+            "action_count": 5,
+            "expectations": {
+              "formatting_response_ms": "<100"
+            }
+          }
+        }
+      ]
+    },
+    "excel": {
+      "total_scenarios": 2,
+      "passed": 2,
+      "failed": 0,
+      "errors": 0,
+      "success_rate": 100.0,
+      "total_duration_ms": 472318,
+      "scenarios": [
+        {
+          "scenario": "Enter values in A1 and B1",
+          "status": "pass",
+          "duration_ms": 268397,
+          "steps_executed": 5,
+          "expectations_met": 6,
+          "expectations_total": 6,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 30,
+            "action_count": 5,
+            "expectations": {
+              "step_time_ms": 200,
+              "cell_select_ms": 50
+            }
+          }
+        },
+        {
+          "scenario": "Use SUM function",
+          "status": "pass",
+          "duration_ms": 203921,
+          "steps_executed": 4,
+          "expectations_met": 3,
+          "expectations_total": 3,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 36,
+            "action_count": 4,
+            "expectations": {
+              "calculation_time_ms": 100
+            }
+          }
+        }
+      ]
+    },
+    "powerpoint": {
+      "total_scenarios": 2,
+      "passed": 2,
+      "failed": 0,
+      "errors": 0,
+      "success_rate": 100.0,
+      "total_duration_ms": 796826,
+      "scenarios": [
+        {
+          "scenario": "Add a new slide and change title",
+          "status": "pass",
+          "duration_ms": 350345,
+          "steps_executed": 7,
+          "expectations_met": 6,
+          "expectations_total": 6,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 45,
+            "action_count": 7,
+            "expectations": {
+              "slide_creation_ms": 300,
+              "title_update_ms": 100
+            }
+          }
+        },
+        {
+          "scenario": "Apply theme to presentation",
+          "status": "pass",
+          "duration_ms": 446481,
+          "steps_executed": 7,
+          "expectations_met": 3,
+          "expectations_total": 3,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 54,
+            "action_count": 7,
+            "expectations": {
+              "theme_apply_ms": 200
+            }
+          }
+        }
+      ]
+    },
+    "integration": {
+      "total_scenarios": 1,
+      "passed": 1,
+      "failed": 0,
+      "errors": 0,
+      "success_rate": 100.0,
+      "total_duration_ms": 64372,
+      "scenarios": [
+        {
+          "scenario": "Navigate between all Office apps",
+          "status": "pass",
+          "duration_ms": 64372,
+          "steps_executed": 2,
+          "expectations_met": 4,
+          "expectations_total": 4,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 58,
+            "action_count": 2,
+            "expectations": {
+              "app_switch_time_ms": "<2000",
+              "total_navigation_ms": "<5000"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

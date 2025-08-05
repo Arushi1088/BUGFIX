@@ -1,0 +1,321 @@
+{
+  "test_name": "Phase 3 Sample Analytics Demo",
+  "test_timestamp": "2025-07-29T20:38:24.717417",
+  "base_scenarios_passed": 3,
+  "total_scenarios": 3,
+  "report_metadata": {
+    "report_type": "Advanced UX Analytics",
+    "generated_at": "2025-07-29T20:38:24.718548",
+    "analytics_version": "3.0.0",
+    "features_enabled": [
+      "performance_monitoring",
+      "accessibility_analysis",
+      "keyboard_navigation_testing",
+      "health_alerts"
+    ]
+  },
+  "performance_analytics": {
+    "summary": {
+      "total_actions_tracked": 5,
+      "measurement_duration": {
+        "start": 1753801674.7173178,
+        "end": 1753801694.7173388,
+        "duration_seconds": 20.00002098083496
+      }
+    },
+    "action_latency": {
+      "count": 5,
+      "avg": 242.58,
+      "median": 198.2,
+      "min": 156.8,
+      "max": 445.1,
+      "std_dev": 118.34034392378621,
+      "p95": 445.1,
+      "p99": 445.1
+    },
+    "core_web_vitals": {
+      "lcp": {
+        "count": 4,
+        "avg": 1910.075,
+        "median": 1886.95,
+        "min": 1765.9,
+        "max": 2100.5,
+        "std_dev": 142.38301338291723,
+        "p95": 2100.5,
+        "p99": 2100.5
+      },
+      "fid": {
+        "count": 4,
+        "avg": 86.2,
+        "median": 87.1,
+        "min": 78.5,
+        "max": 92.1,
+        "std_dev": 5.836665714829543,
+        "p95": 92.1,
+        "p99": 92.1
+      },
+      "cls": {
+        "count": 4,
+        "avg": 0.0875,
+        "median": 0.08499999999999999,
+        "min": 0.06,
+        "max": 0.12,
+        "std_dev": 0.024999999999999998,
+        "p95": 0.12,
+        "p99": 0.12
+      },
+      "ttfb": {
+        "count": 4,
+        "avg": 109.95,
+        "median": 111.9,
+        "min": 95.3,
+        "max": 120.7,
+        "std_dev": 11.032829797170505,
+        "p95": 120.7,
+        "p99": 120.7
+      },
+      "fcp": {
+        "count": 4,
+        "avg": 966.125,
+        "median": 917.6500000000001,
+        "min": 823.4,
+        "max": 1205.8,
+        "std_dev": 167.36406175361142,
+        "p95": 1205.8,
+        "p99": 1205.8
+      }
+    },
+    "performance_timeline": [
+      {
+        "timestamp": 1753801674.7173178,
+        "action": "navigate_to_word",
+        "latency_ms": 245.5,
+        "lcp": 1850.2,
+        "fid": 85.3,
+        "cls": 0.08,
+        "ttfb": 120.7,
+        "memory_used_mb": 45.0
+      },
+      {
+        "timestamp": 1753801679.717332,
+        "action": "click_integration_nav",
+        "latency_ms": 156.8,
+        "lcp": 2100.5,
+        "fid": 92.1,
+        "cls": 0.12,
+        "ttfb": 95.3,
+        "memory_used_mb": 48.0
+      },
+      {
+        "timestamp": 1753801684.717335,
+        "action": "navigate_to_excel",
+        "latency_ms": 198.2,
+        "lcp": 1765.9,
+        "fid": 78.5,
+        "cls": 0.06,
+        "ttfb": 108.2,
+        "memory_used_mb": 52.0
+      },
+      {
+        "timestamp": 1753801689.7173371,
+        "action": "accessibility_scan",
+        "latency_ms": 445.1,
+        "lcp": null,
+        "fid": null,
+        "cls": null,
+        "ttfb": null,
+        "memory_used_mb": 55.0
+      },
+      {
+        "timestamp": 1753801694.7173388,
+        "action": "navigate_to_powerpoint",
+        "latency_ms": 167.3,
+        "lcp": 1923.7,
+        "fid": 88.9,
+        "cls": 0.09,
+        "ttfb": 115.6,
+        "memory_used_mb": 49.0
+      }
+    ],
+    "performance_grade": {
+      "score": 90,
+      "grade": "A",
+      "status": "Excellent"
+    }
+  },
+  "accessibility_analytics": {
+    "summary": {
+      "total_contexts_scanned": 3,
+      "total_violations": 4,
+      "unique_violation_types": 4,
+      "accessibility_score": 74
+    },
+    "violations_by_impact": {
+      "critical": {
+        "count": 2,
+        "percentage": 50.0,
+        "top_issues": [
+          {
+            "id": "image-alt",
+            "description": "Images must have alternate text",
+            "help": "Add alt attributes to img elements",
+            "nodes_affected": 2
+          },
+          {
+            "id": "form-label",
+            "description": "Form elements must have labels",
+            "help": "Ensure form controls have associated labels",
+            "nodes_affected": 1
+          }
+        ]
+      },
+      "serious": {
+        "count": 1,
+        "percentage": 25.0,
+        "top_issues": [
+          {
+            "id": "color-contrast",
+            "description": "Elements must have sufficient color contrast",
+            "help": "Ensure text color has sufficient contrast against background",
+            "nodes_affected": 3
+          }
+        ]
+      },
+      "moderate": {
+        "count": 1,
+        "percentage": 25.0,
+        "top_issues": [
+          {
+            "id": "button-name",
+            "description": "Buttons must have accessible names",
+            "help": "Add accessible names to button elements",
+            "nodes_affected": 2
+          }
+        ]
+      },
+      "minor": {
+        "count": 0,
+        "percentage": 0.0,
+        "top_issues": []
+      }
+    },
+    "wcag_compliance": {
+      "A": {
+        "violations_count": 3,
+        "compliance_status": "fail"
+      },
+      "AA": {
+        "violations_count": 1,
+        "compliance_status": "fail"
+      },
+      "AAA": {
+        "violations_count": 0,
+        "compliance_status": "pass"
+      }
+    },
+    "violation_categories": {
+      "Visual Design": 1,
+      "Content": 1,
+      "Other": 2
+    },
+    "context_details": [
+      {
+        "context": "Word App",
+        "timestamp": "2025-07-29T20:38:24.717342",
+        "violations_count": 2,
+        "summary": {
+          "violations_count": 2,
+          "critical_violations": 1,
+          "serious_violations": 1,
+          "moderate_violations": 0,
+          "minor_violations": 0
+        }
+      },
+      {
+        "context": "Excel App",
+        "timestamp": "2025-07-29T20:38:24.717375",
+        "violations_count": 1,
+        "summary": {
+          "violations_count": 1,
+          "critical_violations": 1,
+          "serious_violations": 0,
+          "moderate_violations": 0,
+          "minor_violations": 0
+        }
+      },
+      {
+        "context": "PowerPoint App",
+        "timestamp": "2025-07-29T20:38:24.717379",
+        "violations_count": 1,
+        "summary": {
+          "violations_count": 1,
+          "critical_violations": 0,
+          "serious_violations": 0,
+          "moderate_violations": 1,
+          "minor_violations": 0
+        }
+      }
+    ],
+    "recommendations": [
+      "\ud83d\udea8 Address critical accessibility violations immediately - these prevent basic usage for users with disabilities",
+      "\u26a0\ufe0f Fix serious accessibility issues that significantly impact user experience",
+      "\ud83d\udcdd Resolve moderate accessibility issues to improve overall compliance"
+    ]
+  },
+  "keyboard_navigation_analytics": {
+    "summary": {
+      "contexts_tested": 3,
+      "total_interactive_elements": 45,
+      "total_reachable_elements": 37,
+      "overall_coverage_percentage": 82.22222222222221,
+      "average_coverage_percentage": 82.6
+    },
+    "coverage_by_context": [
+      {
+        "context": "Word App",
+        "expected_elements": 12,
+        "reached_elements": 10,
+        "coverage_percentage": 83.3,
+        "timestamp": "2025-07-29T20:38:24.717389"
+      },
+      {
+        "context": "Excel App",
+        "expected_elements": 15,
+        "reached_elements": 13,
+        "coverage_percentage": 86.7,
+        "timestamp": "2025-07-29T20:38:24.717392"
+      },
+      {
+        "context": "PowerPoint App",
+        "expected_elements": 18,
+        "reached_elements": 14,
+        "coverage_percentage": 77.8,
+        "timestamp": "2025-07-29T20:38:24.717396"
+      }
+    ],
+    "interactive_elements_analysis": {
+      "total_interactive_elements": 9,
+      "element_type_breakdown": {
+        "BUTTON": 3,
+        "A": 3,
+        "INPUT[text]": 1,
+        "SELECT": 1,
+        "INPUT[range]": 1
+      },
+      "elements_with_ids": 9,
+      "elements_with_custom_tabindex": 0
+    },
+    "navigation_grade": "C",
+    "recommendations": []
+  },
+  "health_alerts": [],
+  "executive_summary": {
+    "overall_status": "GOOD",
+    "performance_grade": "A",
+    "accessibility_score": 74,
+    "keyboard_coverage": 82.22222222222221,
+    "total_alerts": 0,
+    "critical_issues": 0,
+    "key_recommendations": []
+  }
+}

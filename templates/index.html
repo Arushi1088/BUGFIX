@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>🔍 UX Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>🔍 UX Analyzer</h1>
+
+  <!-- URL form -->
+  <section>
+    <h2>Analyze by URL</h2>
+    <form action="/analyze/url" method="post">
+      <input
+        type="url"
+        name="url"
+        placeholder="https://example.com"
+        required
+        style="width: 400px; padding: 0.5em;"
+      />
+      <button type="submit">🚀 Analyze Website</button>
+    </form>
+  </section>
+
+  <!-- Analyze by Task -->
+  <section style="margin-top:2em;">
+    <h2>Analyze by Scenario</h2>
+    <form action="/analyze/task" method="post">
+      <input
+        type="url"
+        name="url"
+        placeholder="https://example.com"
+        required
+        style="width:400px; padding:0.5em;"
+      /><br/><br/>
+      <textarea
+        name="scenario"
+        placeholder="Describe the scenario to test (e.g. "Search for Argon Oil Serum and add to cart")."
+        rows="3"
+        style="width:400px; padding:0.5em;"
+        required
+      ></textarea><br/><br/>
+      <button type="submit">🚀 Run Scenario & Audit</button>
+    </form>
+  </section>
+
+  <!-- Screenshot upload form -->
+  <section style="margin-top:2em;">
+    <h2>Analyze by Screenshot</h2>
+    <form
+      action="/analyze/upload"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input
+        type="file"
+        name="file"
+        accept="image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/webp"
+        required
+      />
+      <button type="submit">📸 Upload & Analyze</button>
+    </form>
+  </section>
+
+</body>
+</html>

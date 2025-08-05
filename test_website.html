@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>UI/UX Testing Playground</title>
+  <style>
+    /* 1. Poor contrast in nav links */
+    body { font-family: Arial, sans-serif; margin:0; padding:0; color:#555; }
+    header { background:#ddd; padding:8px; }
+    nav ul { list-style:none; margin:0; padding:0; display:flex; }
+    nav ul li { margin-right:50px; }            /* Too much spacing */
+    nav ul li a { color:#ccc; text-decoration:none; } /* Very low contrast */
+
+    /* 2. Hero section: tiny heading + low contrast text */
+    #hero { background:#333; color:#777; padding:40px; text-align:center; }
+    #hero h1 { font-size:20px; }                  /* Heading too small */
+
+    /* 3. Sidebar/main overlap & no clear hierarchy */
+    .sidebar { width:180px; float:right; background:#f0f0f0; padding:8px; font-size:10px; }
+    .main { margin-right:200px; padding:8px; }
+
+    /* 4. Cards mis‑aligned, tiny borders */
+    .card { 
+      width:200px; float:left; margin:12px; padding:8px; 
+      border:1px solid #eee; box-shadow:0 0 2px #eee;
+    }
+
+    /* 5. Images with no alt text */
+    img { width:100%; }
+
+    /* 6. Inconsistent button styles & poor contrast */
+    .btn { padding:6px 12px; background:blue; color:white; border:none; cursor:pointer; }
+    .btn-secondary { background:green; color:black; } /* Bad contrast */
+
+    /* 7. Form inputs without visible labels */
+    form { margin:20px; }
+    form label { display:none; }
+    form input { display:block; margin-bottom:10px; width:220px; }
+
+    /* 8. Modal that auto‑closes & no close button */
+    #modal {
+      display:none;
+      position:fixed; top:20%; left:20%;
+      width:60%; height:50%; padding:20px;
+      background:white; border:2px solid #000;
+      box-shadow:0 0 10px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <h1>Welcome!</h1>
+    <p>Delivering the best service.</p>
+    <button class="btn" onclick="openModal()">Learn More</button>
+  </section>
+
+  <div class="sidebar">
+    <p>Sidebar text is tiny and unlabeled—hard to read.</p>
+  </div>
+
+  <div class="main">
+    <h2>Our Products</h2>
+    <div class="card">
+      <img src="https://via.placeholder.com/200x100">
+      <h3>Product A</h3>
+      <p>Long description that never wraps nicely and has no brevity.</p>
+      <a href="#" class="btn-secondary">Buy Now</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/200x100">
+      <h3>Product B</h3>
+      <p>Another product blurb.</p>
+      <a href="#" class="btn">Add to Cart</a>
+    </div>
+  </div>
+
+  <form>
+    <label for="name">Name</label>
+    <input id="name" type="text" placeholder="Your name here">
+
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="you@example.com">
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="modal">
+    <h2>Modal Title</h2>
+    <p>This modal has no "×" to close—and then auto disappears in 5 seconds.</p>
+  </div>
+
+  <script>
+    function openModal() {
+      const m = document.getElementById('modal');
+      m.style.display = 'block';
+      setTimeout(() => { m.style.display = 'none'; }, 5000);
+    }
+  </script>
+
+</body>
+</html>

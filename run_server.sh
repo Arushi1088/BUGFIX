@@ -1,0 +1,1 @@
+python3 -c "import http.server; import socketserver; import os; os.chdir('/Users/arushitandon/Desktop/UIUX analyzer/ux-analyzer'); httpd = socketserver.TCPServer(('', 8080), http.server.SimpleHTTPRequestHandler); print('Server at http://localhost:8080'); httpd.serve_forever()"

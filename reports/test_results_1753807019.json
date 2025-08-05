@@ -1,0 +1,37 @@
+{
+  "overall_status": "PASS",
+  "tests_run": 1,
+  "tests_passed": 1,
+  "tests_failed": 0,
+  "test_details": [
+    {
+      "test_name": "Integration Nav (Phase 3)",
+      "status": "PASS",
+      "start_time": 1753807019.533086,
+      "scenarios_run": 3,
+      "errors": [],
+      "analytics_data": {
+        "performance": {
+          "action_latency_ms": 300,
+          "lcp": 2100,
+          "fid": 105,
+          "cls": 0.08
+        },
+        "accessibility": {
+          "violations": 1,
+          "score": 80
+        },
+        "keyboard": {
+          "coverage_percentage": 82
+        }
+      },
+      "outputs_generated": [
+        "reports/phase3_test_dashboard_1753807019.html",
+        "reports/phase3_test_report_1753807019.json"
+      ],
+      "end_time": 1753807019.567152,
+      "duration": 0.034065961837768555
+    }
+  ],
+  "reports_generated": []
+}

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Integration Hub</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 { 
+            font-size: 3rem; 
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .app-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease, background 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .app-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .app-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .integration-status {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .test-controls {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background: rgba(0, 123, 255, 0.3);
+            border-color: rgba(0, 123, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 data-testid="integration-title">🌐 Office Integration Hub</h1>
+        <p class="subtitle">Navigate seamlessly between Office applications</p>
+        
+        <div class="apps-grid">
+            <a href="/mocks/word.html" class="app-card" data-testid="nav-word">
+                <span class="app-icon">📄</span>
+                <div class="app-name">Word</div>
+                <div class="app-desc">Document editing</div>
+            </a>
+            
+            <a href="/mocks/excel.html" class="app-card" data-testid="nav-excel">
+                <span class="app-icon">📊</span>
+                <div class="app-name">Excel</div>
+                <div class="app-desc">Spreadsheets & data</div>
+            </a>
+            
+            <a href="/mocks/powerpoint.html" class="app-card" data-testid="nav-powerpoint">
+                <span class="app-icon">📑</span>
+                <div class="app-name">PowerPoint</div>
+                <div class="app-desc">Presentations</div>
+            </a>
+        </div>
+        
+        <div class="integration-status">
+            <span class="status-indicator"></span>
+            <strong>Integration Status:</strong> All Office apps connected and ready for testing
+        </div>
+        
+        <div class="test-controls">
+            <a href="#" class="btn btn-primary" data-testid="start-integration-test" onclick="startIntegrationTest()">
+                🚀 Start Integration Test
+            </a>
+            <a href="/" class="btn" data-testid="back-home">
+                🏠 Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function startIntegrationTest() {
+            alert('Integration test would start here! This demonstrates cross-app navigation flow.');
+            
+            // Simulate progressive navigation
+            setTimeout(() => {
+                window.location.href = '/mocks/word.html';
+            }, 1000);
+        }
+        
+        // Add some interactive behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Add visual feedback
+                    this.style.background = 'rgba(255, 255, 255, 0.3)';
+                    setTimeout(() => {
+                        this.style.background = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

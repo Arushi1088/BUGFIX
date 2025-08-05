@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Excel - Phase 3 UX Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --excel-green: #107c41;
+            --excel-light-green: #16a085;
+            --excel-dark-green: #0e5d31;
+            --surface-color: #faf9f8;
+            --card-color: #ffffff;
+            --text-primary: #323130;
+            --text-secondary: #605e5c;
+            --border-color: #edebe9;
+            --grid-border: #d1d1d1;
+            --selected-cell: #e7f3ff;
+            --header-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--surface-color);
+            color: var(--text-primary);
+            line-height: 1.4;
+            overflow: hidden;
+        }
+
+        /* Application Header */
+        .app-header {
+            background: var(--excel-green);
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .app-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M3 3h18v18H3V3zm2 2v14h14V5H5z"/><path d="M7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>');
+        }
+
+        .app-title {
+            font-size: 14px;
+            font-weight: 600;
+            flex-grow: 1;
+        }
+
+        /* Ribbon Interface */
+        .ribbon {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--excel-green);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ribbon-tab {
+            padding: 8px 16px;
+            margin-right: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .ribbon-tab:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .ribbon-tab.active {
+            background: var(--card-color);
+            color: var(--text-primary);
+        }
+
+        .integration-nav {
+            margin-left: auto;
+            padding: 8px 16px;
+            background: #ff8c00;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .integration-nav:hover {
+            background: #e07b00;
+            transform: translateY(-1px);
+        }
+
+        /* Formula Bar */
+        .formula-bar {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--card-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .name-box {
+            width: 80px;
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-right: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+        }
+
+        .formula-input {
+            flex: 1;
+            padding: 6px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 14px;
+        }
+
+        .formula-input:focus {
+            outline: none;
+            border-color: var(--excel-light-green);
+            box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.2);
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 160px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--card-color);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-section {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            color: var(--excel-green);
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .chart-preview {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .chart-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .function-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .function-item {
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            background: var(--surface-color);
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            transition: background-color 0.2s ease;
+        }
+
+        .function-item:hover {
+            background: var(--excel-light-green);
+            color: white;
+        }
+
+        /* Spreadsheet Container */
+        .spreadsheet-container {
+            flex: 1;
+            background: var(--card-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Column Headers */
+        .column-headers {
+            display: flex;
+            background: var(--header-bg);
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .row-header-space {
+            width: 60px;
+            background: var(--header-bg);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .column-header {
+            width: 120px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid var(--border-color);
+            font-weight: 600;
+            background: var(--header-bg);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .column-header:hover {
+            background: #e9ecef;
+        }
+
+        .column-header.selected {
+            background: var(--excel-light-green);
+            color: white;
+        }
+
+        /* Spreadsheet Grid */
+        .spreadsheet-grid {
+            display: flex;
+            overflow: auto;
+            height: calc(100% - 40px);
+        }
+
+        .row-headers {
+            display: flex;
+            flex-direction: column;
+            background: var(--header-bg);
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            left: 0;
+            z-index: 50;
+        }
+
+        .row-header {
+            width: 60px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--grid-border);
+            font-weight: 600;
+            background: var(--header-bg);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .row-header:hover {
+            background: #e9ecef;
+        }
+
+        .row-header.selected {
+            background: var(--excel-light-green);
+            color: white;
+        }
+
+        .cells-container {
+            flex: 1;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .cell {
+            width: 120px;
+            height: 30px;
+            border-right: 1px solid var(--grid-border);
+            border-bottom: 1px solid var(--grid-border);
+            padding: 4px 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            background: var(--card-color);
+            transition: all 0.2s ease;
+        }
+
+        .cell:hover {
+            background: #f8f9fa;
+        }
+
+        .cell.selected {
+            background: var(--selected-cell);
+            border: 2px solid var(--excel-green);
+            z-index: 10;
+        }
+
+        .cell.has-formula {
+            background: #fff3cd;
+        }
+
+        .cell.has-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .cell input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .cell input:focus {
+            outline: none;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: absolute;
+            top: 100px;
+            right: 50px;
+            width: 400px;
+            height: 300px;
+            background: var(--card-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            padding: 20px;
+            z-index: 200;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--excel-green);
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--excel-green);
+            font-weight: 600;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--card-color);
+            border-top: 1px solid var(--border-color);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .calculation-status {
+            color: var(--excel-green);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+
+            .chart-container {
+                width: 300px;
+                height: 200px;
+                right: 20px;
+                top: 80px;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        *:focus {
+            outline: 2px solid var(--excel-light-green);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Application Header -->
+    <header class="app-header">
+        <div class="title-bar">
+            <div class="app-icon" aria-label="Microsoft Excel"></div>
+            <h1 class="app-title">Microsoft Excel - UX Analytics Dashboard</h1>
+        </div>
+
+        <nav class="ribbon" role="navigation" aria-label="Main navigation">
+            <div class="ribbon-tab active" tabindex="0" role="tab" aria-selected="true">Home</div>
+            <div class="ribbon-tab" tabindex="0" role="tab">Insert</div>
+            <div class="ribbon-tab" tabindex="0" role="tab">Data</div>
+            <div class="ribbon-tab" tabindex="0" role="tab">Formulas</div>
+            <div class="ribbon-tab" tabindex="0" role="tab">Review</div>
+            <div class="ribbon-tab" tabindex="0" role="tab">View</div>
+            <div class="integration-nav" 
+                 tabindex="0" 
+                 role="button" 
+                 aria-label="Navigate to Integration Hub"
+                 onclick="window.location.href='/integration.html'">
+                🔗 Integration Hub
+            </div>
+        </nav>
+    </header>
+
+    <!-- Formula Bar -->
+    <div class="formula-bar">
+        <label for="name-box" class="sr-only">Cell reference</label>
+        <input type="text" id="name-box" class="name-box" value="A1" readonly aria-label="Current cell reference">
+
+        <label for="formula-input" class="sr-only">Formula bar</label>
+        <input type="text" 
+               id="formula-input" 
+               class="formula-input" 
+               placeholder="Enter formula or value..."
+               aria-label="Formula or value input">
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" role="complementary" aria-label="Tools and functions">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Quick Charts</h3>
+                <div class="chart-preview" 
+                     role="button" 
+                     tabindex="0"
+                     aria-label="Create column chart">
+                    📊 Column Chart
+                </div>
+                <div class="chart-preview" 
+                     role="button" 
+                     tabindex="0"
+                     aria-label="Create pie chart">
+                    🥧 Pie Chart
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Common Functions</h3>
+                <div class="function-list" role="list">
+                    <div class="function-item" 
+                         role="listitem" 
+                         tabindex="0"
+                         aria-label="SUM function">
+                        =SUM()
+                    </div>
+                    <div class="function-item" 
+                         role="listitem" 
+                         tabindex="0"
+                         aria-label="AVERAGE function">
+                        =AVERAGE()
+                    </div>
+                    <div class="function-item" 
+                         role="listitem" 
+                         tabindex="0"
+                         aria-label="COUNT function">
+                        =COUNT()
+                    </div>
+                    <div class="function-item" 
+                         role="listitem" 
+                         tabindex="0"
+                         aria-label="VLOOKUP function">
+                        =VLOOKUP()
+                    </div>
+                    <div class="function-item" 
+                         role="listitem" 
+                         tabindex="0"
+                         aria-label="IF function">
+                        =IF()
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">UX Analytics</h3>
+                <div class="function-item" 
+                     role="button" 
+                     tabindex="0"
+                     aria-label="Performance metrics">
+                    📈 Performance
+                </div>
+                <div class="function-item" 
+                     role="button" 
+                     tabindex="0"
+                     aria-label="User behavior">
+                    👤 User Behavior
+                </div>
+                <div class="function-item" 
+                     role="button" 
+                     tabindex="0"
+                     aria-label="Accessibility score">
+                    ♿ Accessibility
+                </div>
+            </div>
+        </aside>
+
+        <!-- Spreadsheet Container -->
+        <main class="spreadsheet-container" role="main" aria-label="Spreadsheet">
+            <!-- Column Headers -->
+            <div class="column-headers">
+                <div class="row-header-space"></div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column A">A</div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column B">B</div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column C">C</div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column D">D</div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column E">E</div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column F">F</div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column G">G</div>
+                <div class="column-header" tabindex="0" role="columnheader" aria-label="Column H">H</div>
+            </div>
+
+            <!-- Spreadsheet Grid -->
+            <div class="spreadsheet-grid" role="grid" aria-label="Data grid">
+                <div class="row-headers">
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 1">1</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 2">2</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 3">3</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 4">4</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 5">5</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 6">6</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 7">7</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 8">8</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 9">9</div>
+                    <div class="row-header" tabindex="0" role="rowheader" aria-label="Row 10">10</div>
+                </div>
+
+                <div class="cells-container">
+                    <!-- Row 1 -->
+                    <div class="row" role="row">
+                        <div class="cell selected" 
+                             role="gridcell" 
+                             tabindex="0"
+                             aria-label="Cell A1, UX Metrics">
+                            UX Metrics
+                        </div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B1, Performance">Performance</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C1, Accessibility">Accessibility</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D1, Usability">Usability</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E1, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F1, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G1, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H1, empty"></div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A2, Load Time">Load Time (ms)</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B2, 1250">1250</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C2, 95%">95%</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D2, 8.7">8.7</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E2, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F2, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G2, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H2, empty"></div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A3, Task Success">Task Success Rate</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B3, 92%">92%</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C3, AAA">AAA</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D3, 9.1">9.1</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E3, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F3, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G3, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H3, empty"></div>
+                    </div>
+
+                    <!-- Row 4 -->
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A4, Error Rate">Error Rate</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B4, 3%">3%</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C4, 0 violations">0 violations</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D4, 8.9">8.9</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E4, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F4, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G4, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H4, empty"></div>
+                    </div>
+
+                    <!-- Row 5 -->
+                    <div class="row" role="row">
+                        <div class="cell has-formula" 
+                             role="gridcell" 
+                             tabindex="0" 
+                             aria-label="Cell A5, formula: Average Score">
+                            =AVERAGE(B2:D4)
+                        </div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B5, 87.5">87.5</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C5, Excellent">Excellent</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D5, 8.9">8.9</div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E5, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F5, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G5, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H5, empty"></div>
+                    </div>
+
+                    <!-- Additional rows... -->
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A6, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B6, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C6, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D6, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E6, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F6, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G6, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H6, empty"></div>
+                    </div>
+
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A7, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B7, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C7, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D7, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E7, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F7, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G7, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H7, empty"></div>
+                    </div>
+
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A8, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B8, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C8, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D8, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E8, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F8, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G8, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H8, empty"></div>
+                    </div>
+
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A9, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B9, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C9, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D9, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E9, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F9, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G9, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H9, empty"></div>
+                    </div>
+
+                    <div class="row" role="row">
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell A10, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell B10, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell C10, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell D10, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell E10, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell F10, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell G10, empty"></div>
+                        <div class="cell" role="gridcell" tabindex="0" aria-label="Cell H10, empty"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Container -->
+            <div class="chart-container" aria-label="UX Metrics Chart">
+                <h3 class="chart-title">UX Performance Dashboard</h3>
+                <div class="chart-canvas">
+                    📊 Interactive Chart Area
+                    <br>
+                    <small>Performance: 87.5% | Accessibility: AAA | Usability: 8.9/10</small>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Status Bar -->
+    <footer class="status-bar" role="contentinfo">
+        <div class="status-item">
+            <span>Ready</span>
+            <span>•</span>
+            <span>Sheet1</span>
+        </div>
+        <div class="status-item">
+            <span class="calculation-status">📊 Auto Calculate</span>
+            <span>•</span>
+            <span>✅ Analytics Active</span>
+        </div>
+        <div class="status-item">
+            <span>Zoom: 100%</span>
+            <span>•</span>
+            <span>♿ Accessible</span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedCell = document.querySelector('.cell.selected');
+            let currentRow = 0, currentCol = 0;
+
+            // Cell selection and navigation
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach((cell, index) => {
+                cell.addEventListener('click', function() {
+                    // Remove previous selection
+                    document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+
+                    // Add selection to current cell
+                    this.classList.add('selected');
+                    selectedCell = this;
+
+                    // Update name box
+                    const row = Math.floor(index / 8) + 1;
+                    const col = String.fromCharCode(65 + (index % 8));
+                    document.getElementById('name-box').value = col + row;
+
+                    // Update formula bar with cell content
+                    document.getElementById('formula-input').value = this.textContent.trim();
+                });
+
+                // Keyboard navigation
+                cell.addEventListener('keydown', function(e) {
+                    const currentIndex = Array.from(cells).indexOf(this);
+                    const rowSize = 8;
+                    let newIndex = currentIndex;
+
+                    switch(e.key) {
+                        case 'ArrowRight':
+                            if (currentIndex % rowSize < rowSize - 1) newIndex = currentIndex + 1;
+                            break;
+                        case 'ArrowLeft':
+                            if (currentIndex % rowSize > 0) newIndex = currentIndex - 1;
+                            break;
+                        case 'ArrowDown':
+                            if (currentIndex + rowSize < cells.length) newIndex = currentIndex + rowSize;
+                            break;
+                        case 'ArrowUp':
+                            if (currentIndex - rowSize >= 0) newIndex = currentIndex - rowSize;
+                            break;
+                        case 'Enter':
+                            if (currentIndex + rowSize < cells.length) newIndex = currentIndex + rowSize;
+                            break;
+                        case 'Tab':
+                            e.preventDefault();
+                            if (currentIndex < cells.length - 1) newIndex = currentIndex + 1;
+                            break;
+                    }
+
+                    if (newIndex !== currentIndex) {
+                        cells[newIndex].click();
+                        cells[newIndex].focus();
+                    }
+                });
+            });
+
+            // Function list interactions
+            const functionItems = document.querySelectorAll('.function-item');
+            functionItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const formulaInput = document.getElementById('formula-input');
+                    formulaInput.value = this.textContent.trim();
+                    formulaInput.focus();
+                });
+            });
+
+            // Chart preview interactions
+            const chartPreviews = document.querySelectorAll('.chart-preview');
+            chartPreviews.forEach(preview => {
+                preview.addEventListener('click', function() {
+                    console.log('Creating chart:', this.textContent.trim());
+                    // In a real app, this would create an actual chart
+                });
+            });
+
+            // Formula bar functionality
+            const formulaInput = document.getElementById('formula-input');
+            formulaInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    if (selectedCell) {
+                        selectedCell.textContent = this.value;
+                        // Move to next cell
+                        const currentIndex = Array.from(cells).indexOf(selectedCell);
+                        if (currentIndex + 8 < cells.length) {
+                            cells[currentIndex + 8].click();
+                            cells[currentIndex + 8].focus();
+                        }
+                    }
+                }
+            });
+
+            // Performance monitoring for analytics
+            window.addEventListener('load', function() {
+                const analyticsData = {
+                    loadTime: performance.now(),
+                    userAgent: navigator.userAgent,
+                    timestamp: new Date().toISOString(),
+                    cellInteractions: 0
+                };
+
+                console.log('Excel UX Analytics initialized:', analyticsData);
+            });
+
+            // Track cell interactions for analytics
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('cell')) {
+                    console.log('Cell interaction logged:', {
+                        cell: e.target.getAttribute('aria-label'),
+                        timestamp: new Date().toISOString()
+                    });
+                }
+            });
+        });
+
+        // Integration navigation function
+        function navigateToIntegration() {
+            console.log('Navigating to Integration Hub from Excel');
+            window.location.href = '/integration.html';
+        }
+    </script>
+</body>
+</html>

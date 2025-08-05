@@ -1,0 +1,22 @@
+{
+  "llm.api_key": "${OPENAI_API_KEY}",
+  "llm.model": "gpt-4",
+  "llm.response_format": "json_object",
+  "llm.temperature": 0.1,
+  "llm.max_tokens": 2000,
+  
+  "session.max_internal_chat_round_num": 10,
+  "session.roles": ["planner", "code_interpreter"],
+  
+  "planner.enabled": true,
+  "planner.use_example": true,
+  
+  "code_interpreter.enabled": true,
+  "code_interpreter.work_dir": "./taskweaver_workspace",
+  
+  "logging.level": "INFO",
+  "logging.format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+  
+  "project.base_url": "http://127.0.0.1:5001",
+  "project.name": "UX_Analyzer_TaskWeaver"
+}

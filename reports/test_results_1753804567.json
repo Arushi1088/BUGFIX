@@ -1,0 +1,41 @@
+{
+  "overall_status": "FAIL",
+  "tests_run": 1,
+  "tests_passed": 0,
+  "tests_failed": 1,
+  "test_details": [
+    {
+      "test_name": "Integration Nav (Phase 3)",
+      "status": "FAIL",
+      "start_time": 1753804567.542596,
+      "scenarios_run": 3,
+      "errors": [
+        "Navigation failed to http://localhost:8000/word.html: 404",
+        "Navigation failed to http://localhost:8000/excel.html: 404",
+        "Navigation failed to http://localhost:8000/powerpoint.html: 404"
+      ],
+      "analytics_data": {
+        "performance": {
+          "action_latency_ms": 300,
+          "lcp": 2100,
+          "fid": 105,
+          "cls": 0.08
+        },
+        "accessibility": {
+          "violations": 1,
+          "score": 80
+        },
+        "keyboard": {
+          "coverage_percentage": 82
+        }
+      },
+      "outputs_generated": [
+        "/Users/arushitandon/Desktop/UIUX analyzer/ux-analyzer/reports/phase3_test_dashboard_1753804567.html",
+        "/Users/arushitandon/Desktop/UIUX analyzer/ux-analyzer/reports/phase3_test_report_1753804567.json"
+      ],
+      "end_time": 1753804567.5754821,
+      "duration": 0.03288602828979492
+    }
+  ],
+  "reports_generated": []
+}

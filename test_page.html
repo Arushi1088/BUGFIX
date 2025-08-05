@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX Test Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .contact-btn { 
+            background: #007bff; 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        .contact-btn:hover { background: #0056b3; }
+        .content { max-width: 800px; }
+        .hidden { display: none; }
+        #contact-form { 
+            background: #f8f9fa; 
+            padding: 20px; 
+            border-radius: 5px; 
+            margin-top: 20px;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome to Our Test Website</h1>
+        <p>This is a test page for UX analysis. We offer various services and would love to hear from you.</p>
+        
+        <button class="contact-btn" onclick="showContactForm()">Contact Us</button>
+        
+        <div id="contact-form" class="hidden">
+            <h3>Contact Form</h3>
+            <form>
+                <label>Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label>Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label>Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                
+                <button type="submit" class="contact-btn">Send Message</button>
+            </form>
+        </div>
+        
+        <div id="success-message" class="hidden" style="color: green; margin-top: 20px;">
+            <h3>Thank you!</h3>
+            <p>Your message has been received. We'll get back to you soon.</p>
+        </div>
+    </div>
+    
+    <script>
+        function showContactForm() {
+            document.getElementById('contact-form').classList.remove('hidden');
+            document.querySelector('.contact-btn').style.display = 'none';
+        }
+        
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('contact-form').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

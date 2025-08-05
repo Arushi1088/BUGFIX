@@ -1,0 +1,165 @@
+{
+  "summary": {
+    "timestamp": "2025-07-29T15:29:41.755809",
+    "total_scenarios": 7,
+    "passed": 3,
+    "failed": 1,
+    "errors": 3,
+    "success_rate": 42.86,
+    "total_duration_ms": 12644290,
+    "avg_scenario_duration_ms": 1806327.14
+  },
+  "applications": {
+    "word": {
+      "total_scenarios": 2,
+      "passed": 1,
+      "failed": 1,
+      "errors": 0,
+      "success_rate": 50.0,
+      "total_duration_ms": 969045,
+      "scenarios": [
+        {
+          "scenario": "Create a new document",
+          "status": "fail",
+          "duration_ms": 689428,
+          "steps_executed": 15,
+          "expectations_met": 6,
+          "expectations_total": 8,
+          "errors": [
+            "Expected 8 checks, passed 6"
+          ],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 16,
+            "action_count": 15,
+            "expectations": {
+              "page_load_ms": "<1000",
+              "action_response_ms": "<200"
+            }
+          }
+        },
+        {
+          "scenario": "Format text with bold and italic",
+          "status": "pass",
+          "duration_ms": 279617,
+          "steps_executed": 5,
+          "expectations_met": 3,
+          "expectations_total": 3,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 23,
+            "action_count": 5,
+            "expectations": {
+              "formatting_response_ms": "<100"
+            }
+          }
+        }
+      ]
+    },
+    "excel": {
+      "total_scenarios": 2,
+      "passed": 2,
+      "failed": 0,
+      "errors": 0,
+      "success_rate": 100.0,
+      "total_duration_ms": 451763,
+      "scenarios": [
+        {
+          "scenario": "Enter values in A1 and B1",
+          "status": "pass",
+          "duration_ms": 247397,
+          "steps_executed": 5,
+          "expectations_met": 6,
+          "expectations_total": 6,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 30,
+            "action_count": 5,
+            "expectations": {
+              "step_time_ms": "<200",
+              "cell_select_ms": "<50"
+            }
+          }
+        },
+        {
+          "scenario": "Use SUM function",
+          "status": "pass",
+          "duration_ms": 204366,
+          "steps_executed": 4,
+          "expectations_met": 3,
+          "expectations_total": 3,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 36,
+            "action_count": 4,
+            "expectations": {
+              "calculation_time_ms": "<100"
+            }
+          }
+        }
+      ]
+    },
+    "powerpoint": {
+      "total_scenarios": 2,
+      "passed": 0,
+      "failed": 0,
+      "errors": 2,
+      "success_rate": 0.0,
+      "total_duration_ms": 11223476,
+      "scenarios": [
+        {
+          "scenario": "Add a new slide and change title",
+          "status": "error",
+          "duration_ms": 11223474,
+          "steps_executed": 0,
+          "expectations_met": 0,
+          "expectations_total": 0,
+          "errors": [
+            "Agent execution failed: Browser.close: Connection closed while reading from the driver"
+          ],
+          "warnings": [],
+          "performance_data": {}
+        },
+        {
+          "scenario": "Apply theme to presentation",
+          "status": "error",
+          "duration_ms": 2,
+          "steps_executed": 0,
+          "expectations_met": 0,
+          "expectations_total": 0,
+          "errors": [
+            "Agent execution failed: It looks like you are using Playwright Sync API inside the asyncio loop.\nPlease use the Async API instead."
+          ],
+          "warnings": [],
+          "performance_data": {}
+        }
+      ]
+    },
+    "integration": {
+      "total_scenarios": 1,
+      "passed": 0,
+      "failed": 0,
+      "errors": 1,
+      "success_rate": 0.0,
+      "total_duration_ms": 6,
+      "scenarios": [
+        {
+          "scenario": "Navigate between all Office apps",
+          "status": "error",
+          "duration_ms": 6,
+          "steps_executed": 0,
+          "expectations_met": 0,
+          "expectations_total": 0,
+          "errors": [
+            "Agent execution failed: It looks like you are using Playwright Sync API inside the asyncio loop.\nPlease use the Async API instead."
+          ],
+          "warnings": [],
+          "performance_data": {}
+        }
+      ]
+    }
+  }
+}

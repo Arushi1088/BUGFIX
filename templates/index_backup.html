@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>🔍 UX Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>🔍 UX Analyzer</h1>
+
+  <!-- URL form -->
+  <section>
+    <h2>Analyze by URL</h2>
+    <form action="/analyze/url" method="post">
+      <input
+        type="url"
+        name="url"
+        placeholder="https://example.com"
+        required
+        style="width: 400px; padding: 0.5em;"
+      />
+      <button type="submit">🚀 Analyze Website</button>
+    </form>
+  </section>
+
+  <!-- Screenshot upload form -->
+  <section style="margin-top:2em;">
+    <h2>Analyze by Screenshot</h2>
+    <form
+      action="/analyze/upload"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input
+        type="file"
+        name="screenshot"
+        accept="image/png, image/jpeg"
+        required
+      />
+      <button type="submit">📸 Upload & Analyze</button>
+    </form>
+  </section>
+
+</body>
+</html>

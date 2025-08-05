@@ -1,0 +1,37 @@
+{
+  "overall_status": "PASS",
+  "tests_run": 1,
+  "tests_passed": 1,
+  "tests_failed": 0,
+  "test_details": [
+    {
+      "test_name": "Integration Nav (Phase 3)",
+      "status": "PASS",
+      "start_time": 1753804725.2098932,
+      "scenarios_run": 3,
+      "errors": [],
+      "analytics_data": {
+        "performance": {
+          "action_latency_ms": 300,
+          "lcp": 2100,
+          "fid": 105,
+          "cls": 0.08
+        },
+        "accessibility": {
+          "violations": 1,
+          "score": 80
+        },
+        "keyboard": {
+          "coverage_percentage": 82
+        }
+      },
+      "outputs_generated": [
+        "/Users/arushitandon/Desktop/UIUX analyzer/ux-analyzer/reports/phase3_test_dashboard_1753804725.html",
+        "/Users/arushitandon/Desktop/UIUX analyzer/ux-analyzer/reports/phase3_test_report_1753804725.json"
+      ],
+      "end_time": 1753804725.234688,
+      "duration": 0.024794816970825195
+    }
+  ],
+  "reports_generated": []
+}

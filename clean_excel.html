@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Excel Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --excel-green: #107c41;
+            --excel-light-green: #16a085;
+            --surface-color: #faf9f8;
+            --card-color: #ffffff;
+            --text-primary: #323130;
+            --text-secondary: #605e5c;
+            --border-color: #edebe9;
+            --grid-border: #d1d1d1;
+            --selected-cell: #e7f3ff;
+            --header-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--surface-color);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .app-header {
+            background: var(--excel-green);
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .app-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: var(--card-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 16px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .toolbar-button {
+            background: var(--excel-green);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .toolbar-button:hover {
+            background: var(--excel-light-green);
+        }
+
+        .toolbar-separator {
+            width: 1px;
+            height: 24px;
+            background: var(--border-color);
+            margin: 0 8px;
+        }
+
+        /* Formula bar */
+        .formula-bar {
+            background: var(--card-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .name-box {
+            width: 80px;
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        .formula-input {
+            flex: 1;
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        /* Main container */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 120px);
+        }
+
+        /* Spreadsheet */
+        .spreadsheet-container {
+            flex: 1;
+            overflow: auto;
+            background: var(--card-color);
+        }
+
+        .spreadsheet {
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .column-header {
+            background: var(--header-bg);
+            border: 1px solid var(--grid-border);
+            padding: 8px;
+            text-align: center;
+            font-weight: 600;
+            min-width: 80px;
+            color: var(--text-secondary);
+        }
+
+        .row-header {
+            background: var(--header-bg);
+            border: 1px solid var(--grid-border);
+            padding: 8px;
+            text-align: center;
+            font-weight: 600;
+            width: 40px;
+            color: var(--text-secondary);
+        }
+
+        .cell {
+            border: 1px solid var(--grid-border);
+            padding: 8px;
+            min-width: 80px;
+            height: 32px;
+            cursor: cell;
+            transition: background-color 0.2s;
+        }
+
+        .cell:hover {
+            background: #f5f5f5;
+        }
+
+        .cell.selected {
+            background: var(--selected-cell);
+            border: 2px solid var(--excel-green);
+        }
+
+        /* Status bar */
+        .status-bar {
+            background: var(--card-color);
+            border-top: 1px solid var(--border-color);
+            padding: 4px 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Interactive elements for testing */
+        .toolbar-button[data-testid="integration-nav"] {
+            background: #0078d4;
+        }
+
+        .toolbar-button[data-testid="integration-nav"]:hover {
+            background: #106ebe;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <div class="app-title">📊 Microsoft Excel Online</div>
+    </div>
+
+    <div class="toolbar">
+        <button class="toolbar-button" data-testid="new-sheet">
+            📄 New Sheet
+        </button>
+        <button class="toolbar-button" data-testid="import-csv">
+            📥 Import CSV
+        </button>
+        <button class="toolbar-button" data-testid="export">
+            📤 Export
+        </button>
+        <button class="toolbar-button" data-testid="chart">
+            📈 Chart
+        </button>
+        
+        <div class="toolbar-separator"></div>
+        
+        <button class="toolbar-button" data-testid="integration-nav">
+            🔗 Integration Hub
+        </button>
+    </div>
+
+    <div class="formula-bar">
+        <input type="text" class="name-box" value="A1" readonly>
+        <span style="font-size: 14px; font-weight: bold;">fx</span>
+        <input type="text" class="formula-input" placeholder="Enter formula or value" data-testid="formula-bar">
+    </div>
+
+    <div class="main-container">
+        <div class="spreadsheet-container" data-testid="excel-app">
+            <table class="spreadsheet">
+                <thead>
+                    <tr>
+                        <th class="column-header"></th>
+                        <th class="column-header">A</th>
+                        <th class="column-header">B</th>
+                        <th class="column-header">C</th>
+                        <th class="column-header">D</th>
+                        <th class="column-header">E</th>
+                        <th class="column-header">F</th>
+                        <th class="column-header">G</th>
+                        <th class="column-header">H</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-header">1</td>
+                        <td class="cell selected" data-testid="cell-a1">42</td>
+                        <td class="cell" data-testid="cell-b1">99</td>
+                        <td class="cell" data-testid="cell-c1"></td>
+                        <td class="cell" data-testid="cell-d1"></td>
+                        <td class="cell" data-testid="cell-e1"></td>
+                        <td class="cell" data-testid="cell-f1"></td>
+                        <td class="cell" data-testid="cell-g1"></td>
+                        <td class="cell" data-testid="cell-h1"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">2</td>
+                        <td class="cell" data-testid="cell-a2">Product A</td>
+                        <td class="cell" data-testid="cell-b2">150</td>
+                        <td class="cell" data-testid="cell-c2"></td>
+                        <td class="cell" data-testid="cell-d2"></td>
+                        <td class="cell" data-testid="cell-e2"></td>
+                        <td class="cell" data-testid="cell-f2"></td>
+                        <td class="cell" data-testid="cell-g2"></td>
+                        <td class="cell" data-testid="cell-h2"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">3</td>
+                        <td class="cell" data-testid="cell-a3">Product B</td>
+                        <td class="cell" data-testid="cell-b3">275</td>
+                        <td class="cell" data-testid="cell-c3"></td>
+                        <td class="cell" data-testid="cell-d3"></td>
+                        <td class="cell" data-testid="cell-e3"></td>
+                        <td class="cell" data-testid="cell-f3"></td>
+                        <td class="cell" data-testid="cell-g3"></td>
+                        <td class="cell" data-testid="cell-h3"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">4</td>
+                        <td class="cell" data-testid="cell-a4"></td>
+                        <td class="cell" data-testid="cell-b4"></td>
+                        <td class="cell" data-testid="cell-c4"></td>
+                        <td class="cell" data-testid="cell-d4"></td>
+                        <td class="cell" data-testid="cell-e4"></td>
+                        <td class="cell" data-testid="cell-f4"></td>
+                        <td class="cell" data-testid="cell-g4"></td>
+                        <td class="cell" data-testid="cell-h4"></td>
+                    </tr>
+                    <tr>
+                        <td class="row-header">5</td>
+                        <td class="cell" data-testid="cell-a5"></td>
+                        <td class="cell" data-testid="cell-b5"></td>
+                        <td class="cell" data-testid="cell-c5"></td>
+                        <td class="cell" data-testid="cell-d5"></td>
+                        <td class="cell" data-testid="cell-e5"></td>
+                        <td class="cell" data-testid="cell-f5"></td>
+                        <td class="cell" data-testid="cell-g5"></td>
+                        <td class="cell" data-testid="cell-h5"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <div>Ready | A1 | Mock Excel Online</div>
+        <div>Sheet 1 of 1</div>
+    </div>
+
+    <script>
+        // Interactive functionality for UX testing
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.addEventListener('click', function() {
+                document.querySelectorAll('.cell').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Update name box
+                const nameBox = document.querySelector('.name-box');
+                const cellId = this.getAttribute('data-testid');
+                if (cellId) {
+                    const coords = cellId.replace('cell-', '').toUpperCase();
+                    nameBox.value = coords;
+                }
+            });
+        });
+
+        // Integration navigation for testing
+        document.querySelector('[data-testid="integration-nav"]').addEventListener('click', function() {
+            // Simulate navigation for UX testing
+            window.location.href = '/integration.html';
+        });
+
+        // Toolbar interactions for testing
+        document.querySelectorAll('.toolbar-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.getAttribute('data-testid') !== 'integration-nav') {
+                    e.preventDefault();
+                    // Visual feedback for testing
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                }
+            });
+        });
+
+        // Formula bar interaction
+        document.querySelector('[data-testid="formula-bar"]').addEventListener('focus', function() {
+            this.style.border = '2px solid var(--excel-green)';
+        });
+
+        document.querySelector('[data-testid="formula-bar"]').addEventListener('blur', function() {
+            this.style.border = '1px solid var(--border-color)';
+        });
+    </script>
+</body>
+</html>

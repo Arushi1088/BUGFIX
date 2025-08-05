@@ -1,0 +1,5 @@
+{
+  "llm.api_key": "YOUR_OPENAI_KEY",
+  "llm.model": "gpt-4",
+  "llm.response_format": "json_object"
+}

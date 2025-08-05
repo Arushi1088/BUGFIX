@@ -1,0 +1,66 @@
+name: Phase 3 UX Analytics Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ux-analytics-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium beautifulsoup4 requests pyyaml
+
+    - name: Install Chrome for testing
+      uses: browser-actions/setup-chrome@latest
+
+    - name: Run Phase 3 UX Analytics Smoke Test
+      working-directory: ./ux-analyzer
+      run: |
+        # Start mock server in background
+        python server.py &
+        SERVER_PID=$!
+
+        # Wait for server to start
+        sleep 5
+
+        # Run the Phase 3 YAML scenario
+        python yaml_runner.py --config schemas/office_tests.yaml --filter "Integration Nav (Phase 3)"
+
+        # Check if test passed
+        if [ $? -eq 0 ]; then
+          echo "✅ Phase 3 UX Analytics tests passed"
+        else
+          echo "❌ Phase 3 UX Analytics tests failed"
+          kill $SERVER_PID
+          exit 1
+        fi
+
+        # Cleanup
+        kill $SERVER_PID
+      continue-on-error: false
+
+    - name: Upload test reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: ux-analytics-reports
+        path: ux-analyzer/reports/
+
+    - name: Run Unit Tests
+      working-directory: ./ux-analyzer
+      run: |
+        python test_phase3_components.py
+      continue-on-error: false

@@ -1,0 +1,19 @@
+{
+  "test_timestamp": 1753807019,
+  "analytics_data": {
+    "performance": {
+      "action_latency_ms": 300,
+      "lcp": 2100,
+      "fid": 105,
+      "cls": 0.08
+    },
+    "accessibility": {
+      "violations": 1,
+      "score": 80
+    },
+    "keyboard": {
+      "coverage_percentage": 82
+    }
+  },
+  "test_framework": "Phase 3 YAML Runner"
+}

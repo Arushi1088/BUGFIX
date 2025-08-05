@@ -1,0 +1,14 @@
+{
+  "name": "phase3-ux-analytics",
+  "version": "1.0.0",
+  "description": "Phase 3 UX Analytics Testing Suite",
+  "scripts": {
+    "test": "python run_ci_tests.sh",
+    "test:smoke": "python yaml_runner.py --config schemas/office_tests.yaml --filter \"Integration Nav (Phase 3)\"",
+    "test:unit": "python test_phase3_components.py",
+    "start:server": "python server.py"
+  },
+  "devDependencies": {
+    "jest": "^27.0.0"
+  }
+}

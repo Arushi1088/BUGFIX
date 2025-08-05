@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft PowerPoint Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --powerpoint-orange: #d24726;
+            --powerpoint-light-orange: #ff6b35;
+            --surface-color: #faf9f8;
+            --card-color: #ffffff;
+            --text-primary: #323130;
+            --text-secondary: #605e5c;
+            --border-color: #edebe9;
+            --slide-bg: #ffffff;
+            --selected-slide: #fff2cc;
+            --thumbnail-border: #d1d1d1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--surface-color);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .app-header {
+            background: var(--powerpoint-orange);
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .app-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            background: var(--card-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 16px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .toolbar-button {
+            background: var(--powerpoint-orange);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .toolbar-button:hover {
+            background: var(--powerpoint-light-orange);
+        }
+
+        .toolbar-separator {
+            width: 1px;
+            height: 24px;
+            background: var(--border-color);
+            margin: 0 8px;
+        }
+
+        /* Format toolbar */
+        .format-toolbar {
+            background: var(--card-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 16px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .format-button {
+            background: #f5f5f5;
+            border: 1px solid var(--border-color);
+            padding: 6px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .format-button:hover {
+            background: #e5e5e5;
+        }
+
+        /* Main container */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 150px);
+        }
+
+        /* Slide panel */
+        .slide-panel {
+            width: 200px;
+            background: var(--card-color);
+            border-right: 1px solid var(--border-color);
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .slide-panel h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .slide-thumbnail {
+            width: 100%;
+            height: 100px;
+            border: 2px solid var(--thumbnail-border);
+            border-radius: 4px;
+            margin-bottom: 12px;
+            background: var(--slide-bg);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            transition: border-color 0.2s;
+        }
+
+        .slide-thumbnail:hover {
+            border-color: var(--powerpoint-orange);
+        }
+
+        .slide-thumbnail.selected {
+            border-color: var(--powerpoint-orange);
+            border-width: 3px;
+        }
+
+        .add-slide-btn {
+            width: 100%;
+            padding: 8px;
+            background: var(--powerpoint-orange);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .add-slide-btn:hover {
+            background: var(--powerpoint-light-orange);
+        }
+
+        /* Main editing area */
+        .editing-area {
+            flex: 1;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        .slide-canvas {
+            width: 90%;
+            max-width: 800px;
+            height: 80%;
+            background: var(--slide-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .slide-title {
+            font-size: 36px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 24px;
+            cursor: text;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .slide-title:hover {
+            background: #f8f8f8;
+        }
+
+        .slide-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            cursor: text;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .slide-subtitle:hover {
+            background: #f8f8f8;
+        }
+
+        /* Design panel */
+        .design-panel {
+            width: 240px;
+            background: var(--card-color);
+            border-left: 1px solid var(--border-color);
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .design-section {
+            margin-bottom: 24px;
+        }
+
+        .design-section h4 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .theme-option {
+            width: 100%;
+            height: 60px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            transition: border-color 0.2s;
+        }
+
+        .theme-option:hover {
+            border-color: var(--powerpoint-orange);
+        }
+
+        /* Status bar */
+        .status-bar {
+            background: var(--card-color);
+            border-top: 1px solid var(--border-color);
+            padding: 4px 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Interactive elements for testing */
+        .toolbar-button[data-testid="integration-nav"] {
+            background: #0078d4;
+        }
+
+        .toolbar-button[data-testid="integration-nav"]:hover {
+            background: #106ebe;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <div class="app-title">📊 Microsoft PowerPoint Online</div>
+    </div>
+
+    <div class="toolbar">
+        <button class="toolbar-button" data-testid="new-slide">
+            ➕ New Slide
+        </button>
+        <button class="toolbar-button" data-testid="theme">
+            🎨 Theme
+        </button>
+        <button class="toolbar-button" data-testid="insert">
+            📋 Insert
+        </button>
+        <button class="toolbar-button" data-testid="animations">
+            ✨ Animations
+        </button>
+        <button class="toolbar-button" data-testid="present">
+            ▶️ Present
+        </button>
+        
+        <div class="toolbar-separator"></div>
+        
+        <button class="toolbar-button" data-testid="integration-nav">
+            🔗 Integration Hub
+        </button>
+    </div>
+
+    <div class="format-toolbar">
+        <button class="format-button" data-testid="bold">B</button>
+        <button class="format-button" data-testid="italic">I</button>
+        <button class="format-button" data-testid="underline">U</button>
+        <button class="format-button" data-testid="font-size">24pt ▼</button>
+        <button class="format-button" data-testid="color">🎨 Color</button>
+        <button class="format-button" data-testid="list">📝 List</button>
+        <button class="format-button" data-testid="shapes">⭕ Shapes</button>
+    </div>
+
+    <div class="main-container">
+        <div class="slide-panel">
+            <h3>Slides</h3>
+            
+            <div class="slide-thumbnail selected" data-testid="slide-1">
+                <div>
+                    <div style="font-weight: bold;">Slide 1</div>
+                    <div>Title Slide</div>
+                </div>
+            </div>
+            
+            <div class="slide-thumbnail" data-testid="slide-2">
+                <div>
+                    <div style="font-weight: bold;">Slide 2</div>
+                    <div>Content</div>
+                </div>
+            </div>
+            
+            <button class="add-slide-btn" data-testid="add-slide">+ Add Slide</button>
+        </div>
+
+        <div class="editing-area" data-testid="powerpoint-app">
+            <div class="slide-canvas" data-testid="slide-canvas">
+                <div class="slide-title" data-testid="slide-title" contenteditable="true">
+                    My Title
+                </div>
+                <div class="slide-subtitle" data-testid="slide-subtitle" contenteditable="true">
+                    Subtitle or main content goes here...
+                </div>
+            </div>
+        </div>
+
+        <div class="design-panel">
+            <div class="design-section">
+                <h4>Design Ideas</h4>
+                
+                <div class="theme-option" data-testid="blue-theme">
+                    Blue Theme
+                </div>
+                
+                <div class="theme-option" data-testid="green-theme">
+                    Green Theme
+                </div>
+                
+                <div class="theme-option" data-testid="orange-theme">
+                    Orange Theme
+                </div>
+                
+                <div class="theme-option" data-testid="minimal-theme">
+                    Minimal Theme
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <div>Slide 1 of 2 | Normal View | Mock PowerPoint Online</div>
+        <div>Ready</div>
+    </div>
+
+    <script>
+        // Slide selection
+        document.querySelectorAll('.slide-thumbnail').forEach(slide => {
+            slide.addEventListener('click', function() {
+                document.querySelectorAll('.slide-thumbnail').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Update status bar
+                const slideNum = this.getAttribute('data-testid').replace('slide-', '');
+                document.querySelector('.status-bar div').textContent = 
+                    `Slide ${slideNum} of 2 | Normal View | Mock PowerPoint Online`;
+            });
+        });
+
+        // Integration navigation for testing
+        document.querySelector('[data-testid="integration-nav"]').addEventListener('click', function() {
+            window.location.href = '/integration.html';
+        });
+
+        // Toolbar interactions
+        document.querySelectorAll('.toolbar-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.getAttribute('data-testid') !== 'integration-nav') {
+                    e.preventDefault();
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                }
+            });
+        });
+
+        // Format button interactions
+        document.querySelectorAll('.format-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.background = '#d0d0d0';
+                setTimeout(() => {
+                    this.style.background = '#f5f5f5';
+                }, 200);
+            });
+        });
+
+        // Theme selection
+        document.querySelectorAll('.theme-option').forEach(theme => {
+            theme.addEventListener('click', function() {
+                document.querySelectorAll('.theme-option').forEach(t => t.style.borderColor = 'var(--border-color)');
+                this.style.borderColor = 'var(--powerpoint-orange)';
+                this.style.borderWidth = '2px';
+            });
+        });
+
+        // Add slide functionality
+        document.querySelector('[data-testid="add-slide"]').addEventListener('click', function() {
+            const slideCount = document.querySelectorAll('.slide-thumbnail').length;
+            const newSlide = document.createElement('div');
+            newSlide.className = 'slide-thumbnail';
+            newSlide.setAttribute('data-testid', `slide-${slideCount + 1}`);
+            newSlide.innerHTML = `
+                <div>
+                    <div style="font-weight: bold;">Slide ${slideCount + 1}</div>
+                    <div>New Slide</div>
+                </div>
+            `;
+            
+            this.parentNode.insertBefore(newSlide, this);
+            
+            // Add click handler to new slide
+            newSlide.addEventListener('click', function() {
+                document.querySelectorAll('.slide-thumbnail').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Editable content interactions
+        document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.style.background = '#fff9e6';
+                this.style.border = '2px solid var(--powerpoint-orange)';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.style.background = 'transparent';
+                this.style.border = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

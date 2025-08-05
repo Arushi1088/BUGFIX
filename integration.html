@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Integration Hub - Phase 3</title>
+    <style>
+        body { font-family: Segoe UI, Arial, sans-serif; margin: 20px; background: #f3f2f1; }
+        .success { background: #d4edda; color: #155724; padding: 20px; border-radius: 8px; border: 1px solid #c3e6cb; }
+        .nav-links { margin: 20px 0; }
+        .nav-links a { display: inline-block; margin: 0 10px; padding: 10px 15px; background: #0078d4; color: white; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="success">
+        <h2>✅ Integration Hub Successful</h2>
+        <p>You have successfully navigated to the integration hub from an Office application.</p>
+        <p>Phase 3 analytics are being collected for this navigation event.</p>
+    </div>
+
+    <div class="nav-links">
+        <a href="/clean_word.html" data-testid="nav-word">📝 Return to Word</a>
+        <a href="/clean_excel.html" data-testid="nav-excel">📊 Return to Excel</a>
+        <a href="/clean_powerpoint.html" data-testid="nav-powerpoint">📽️ Return to PowerPoint</a>
+        <a href="/" data-testid="nav-home">🏠 Main Hub</a>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            console.log('Integration hub loaded at:', new Date().toISOString());
+        });
+    </script>
+</body>
+</html>

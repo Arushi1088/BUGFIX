@@ -1,0 +1,42 @@
+{
+  "summary": {
+    "timestamp": "2025-07-29T17:53:39.611650",
+    "total_scenarios": 1,
+    "passed": 1,
+    "failed": 0,
+    "errors": 0,
+    "success_rate": 100.0,
+    "total_duration_ms": 47467,
+    "avg_scenario_duration_ms": 47467.0
+  },
+  "applications": {
+    "integration": {
+      "total_scenarios": 1,
+      "passed": 1,
+      "failed": 0,
+      "errors": 0,
+      "success_rate": 100.0,
+      "total_duration_ms": 47467,
+      "scenarios": [
+        {
+          "scenario": "Navigate between all Office apps",
+          "status": "pass",
+          "duration_ms": 47467,
+          "steps_executed": 2,
+          "expectations_met": 5,
+          "expectations_total": 5,
+          "errors": [],
+          "warnings": [],
+          "performance_data": {
+            "api_requests": 4,
+            "action_count": 2,
+            "expectations": {
+              "app_switch_time_ms": 2000,
+              "total_navigation_ms": 5000
+            }
+          }
+        }
+      ]
+    }
+  }
+}

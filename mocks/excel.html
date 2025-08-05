@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Excel</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; }
+        nav { background: #217346; padding: 10px; display: flex; gap: 10px; }
+        nav button { 
+            background: white; 
+            border: 1px solid #ccc; 
+            padding: 8px 16px; 
+            border-radius: 3px; 
+            cursor: pointer;
+            font-size: 14px;
+        }
+        nav button:hover { background: #f0f0f0; }
+        .toolbar { 
+            background: #f3f2f1; 
+            padding: 8px; 
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            gap: 5px;
+        }
+        .toolbar button {
+            background: white;
+            border: 1px solid #8a8886;
+            padding: 5px 10px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .sheet-container {
+            margin: 20px;
+            border: 1px solid #ccc;
+            overflow: auto;
+        }
+        #grid { 
+            border-collapse: collapse; 
+            min-width: 800px;
+            background: white;
+        }
+        #grid td { 
+            border: 1px solid #d1d1d1; 
+            padding: 4px 8px; 
+            min-width: 80px;
+            height: 20px;
+            font-size: 12px;
+        }
+        #grid th {
+            background: #f8f8f8;
+            border: 1px solid #d1d1d1;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: normal;
+            text-align: center;
+        }
+        .row-header {
+            background: #f8f8f8 !important;
+            text-align: center;
+            width: 40px;
+            font-weight: normal;
+        }
+        .selected { background: #e6f3ff !important; }
+        .formula-bar {
+            background: white;
+            border: 1px solid #ccc;
+            margin: 10px 20px;
+            padding: 5px;
+            font-family: monospace;
+        }
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #217346;
+            color: white;
+            padding: 5px 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <button id="new-sheet" data-testid="new-sheet-btn">📊 New Sheet</button>
+        <button id="import-csv" data-testid="import-csv-btn">📥 Import CSV</button>
+        <button id="export" data-testid="export-btn">📤 Export</button>
+        <button id="chart" data-testid="chart-btn">📈 Chart</button>
+    </nav>
+    
+    <div class="toolbar">
+        <button id="sum" data-testid="sum-btn">Σ Sum</button>
+        <button id="average" data-testid="average-btn">Avg</button>
+        <button id="format-currency" data-testid="currency-btn">$ Currency</button>
+        <button id="format-percent" data-testid="percent-btn">% Percent</button>
+        <button id="bold-cell" data-testid="bold-cell-btn"><b>B</b></button>
+        <button id="sort-asc" data-testid="sort-btn">↑ Sort</button>
+    </div>
+    
+    <div class="formula-bar">
+        <strong>fx</strong> <input type="text" id="formula-input" data-testid="formula-input" placeholder="Enter formula or value" style="border: none; width: 400px; outline: none;">
+    </div>
+    
+    <div class="sheet-container">
+        <table id="grid">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><th class="row-header">1</th><td contenteditable="true" data-cell="A1" data-testid="cell-A1">42</td><td contenteditable="true" data-cell="B1" data-testid="cell-B1">99</td><td contenteditable="true" data-cell="C1" data-testid="cell-C1"></td><td contenteditable="true" data-cell="D1" data-testid="cell-D1"></td><td contenteditable="true" data-cell="E1" data-testid="cell-E1"></td><td contenteditable="true" data-cell="F1" data-testid="cell-F1"></td><td contenteditable="true" data-cell="G1" data-testid="cell-G1"></td><td contenteditable="true" data-cell="H1" data-testid="cell-H1"></td></tr>
+                <tr><th class="row-header">2</th><td contenteditable="true" data-cell="A2">Product A</td><td contenteditable="true" data-cell="B2">150</td><td contenteditable="true" data-cell="C2"></td><td contenteditable="true" data-cell="D2"></td><td contenteditable="true" data-cell="E2"></td><td contenteditable="true" data-cell="F2"></td><td contenteditable="true" data-cell="G2"></td><td contenteditable="true" data-cell="H2"></td></tr>
+                <tr><th class="row-header">3</th><td contenteditable="true" data-cell="A3">Product B</td><td contenteditable="true" data-cell="B3">275</td><td contenteditable="true" data-cell="C3"></td><td contenteditable="true" data-cell="D3"></td><td contenteditable="true" data-cell="E3"></td><td contenteditable="true" data-cell="F3"></td><td contenteditable="true" data-cell="G3"></td><td contenteditable="true" data-cell="H3"></td></tr>
+                <tr><th class="row-header">4</th><td contenteditable="true" data-cell="A4"></td><td contenteditable="true" data-cell="B4"></td><td contenteditable="true" data-cell="C4"></td><td contenteditable="true" data-cell="D4"></td><td contenteditable="true" data-cell="E4"></td><td contenteditable="true" data-cell="F4"></td><td contenteditable="true" data-cell="G4"></td><td contenteditable="true" data-cell="H4"></td></tr>
+                <tr><th class="row-header">5</th><td contenteditable="true" data-cell="A5"></td><td contenteditable="true" data-cell="B5"></td><td contenteditable="true" data-cell="C5"></td><td contenteditable="true" data-cell="D5"></td><td contenteditable="true" data-cell="E5"></td><td contenteditable="true" data-cell="F5"></td><td contenteditable="true" data-cell="G5"></td><td contenteditable="true" data-cell="H5"></td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="status-bar">
+        <span>Ready</span> | 
+        <span id="selected-cell">A1</span> | 
+        <span>Mock Excel Online</span>
+    </div>
+
+    <script>
+        let selectedCell = null;
+
+        // Cell selection
+        document.querySelectorAll('#grid td[contenteditable]').forEach(cell => {
+            cell.addEventListener('click', function() {
+                if (selectedCell) selectedCell.classList.remove('selected');
+                this.classList.add('selected');
+                selectedCell = this;
+                document.getElementById('selected-cell').textContent = this.getAttribute('data-cell');
+                document.getElementById('formula-input').value = this.textContent;
+            });
+            
+            cell.addEventListener('input', function() {
+                document.getElementById('formula-input').value = this.textContent;
+            });
+        });
+
+        // Formula bar
+        document.getElementById('formula-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && selectedCell) {
+                selectedCell.textContent = this.value;
+            }
+        });
+
+        // New sheet
+        document.getElementById('new-sheet').addEventListener('click', function() {
+            document.querySelectorAll('#grid td[contenteditable]').forEach(cell => {
+                cell.textContent = '';
+            });
+            alert('New sheet created!');
+        });
+
+        // Import CSV
+        document.getElementById('import-csv').addEventListener('click', function() {
+            alert('CSV import dialog would open here');
+        });
+
+        // Sum function
+        document.getElementById('sum').addEventListener('click', function() {
+            if (selectedCell) {
+                // Simple sum of B column for demo
+                let total = 0;
+                document.querySelectorAll('[data-cell^="B"]').forEach(cell => {
+                    const val = parseFloat(cell.textContent) || 0;
+                    total += val;
+                });
+                selectedCell.textContent = total;
+                document.getElementById('formula-input').value = total;
+            }
+        });
+
+        // Format currency
+        document.getElementById('format-currency').addEventListener('click', function() {
+            if (selectedCell && !isNaN(selectedCell.textContent)) {
+                const num = parseFloat(selectedCell.textContent);
+                selectedCell.textContent = '$' + num.toFixed(2);
+                document.getElementById('formula-input').value = selectedCell.textContent;
+            }
+        });
+    </script>
+</body>
+</html>
